@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using CustomerRegister.Entities;
 using CustomerRegister.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,9 +15,16 @@ namespace CustomerRegister.Controllers
     {
 
         private DatabaseContext context;
+        private readonly string pathToCsvFile;
 
-        public CustomerController(DatabaseContext context)
+        public CustomerController(DatabaseContext context, IHostingEnvironment env)
         {
+            pathToCsvFile = env.ContentRootPath
+                + Path.DirectorySeparatorChar.ToString()
+                + "Assets"
+                + Path.DirectorySeparatorChar.ToString()
+                + "Customers.csv";
+
             this.context = context;
         }
 
@@ -81,6 +90,24 @@ namespace CustomerRegister.Controllers
         public IActionResult Seed()
         {
             context.Customers.RemoveRange(context.Customers);
+
+            using (StreamReader sr = new StreamReader(pathToCsvFile))
+            {
+                while (!sr.EndOfStream)
+                {
+                    var line = sr.ReadLine().Trim().Split(",");
+                    context.Customers.Add(new Customer
+                    {
+                        FirstName = line[0],
+                        LastName = line[1],
+                        Email = line[2],
+                        Gender = line[3],
+                        Age = int.Parse(line[4]),
+                        CustomerCreated = DateTime.Now,
+                    });
+                }
+            }
+
             context.SaveChanges();
             return Ok();
         }
