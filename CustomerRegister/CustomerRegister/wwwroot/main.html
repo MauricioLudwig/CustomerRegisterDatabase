@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Customer Register</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+</head>
+<body>
+
+    <style>
+        .table td, .table th {
+            vertical-align: middle;
+        }
+
+        .pageFooter {
+            background-color: #f7f7f7;
+            padding: 4rem 0;
+            margin-top: 4rem;
+        }
+    </style>
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-3">Customer Register</h1>
+            <p class="lead">By <b>Mauricio Ludwig</b></p>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div style="display:none;" id="successMsg" class="alert alert-success" role="alert"></div>
+                <div style="display:none;" id="dangerMsg" class="alert alert-danger" role="alert"></div>
+
+                <h1 class="mb-4">Kunder</h1>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Förnamn</th>
+                            <th>Efternamn</th>
+                            <th>Email</th>
+                            <th>Kön</th>
+                            <th>Ålder</th>
+                            <th>Skapad</th>
+                            <th>Redigerad</th>
+                            <th>Redigera</th>
+                            <th>Ta bort</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-sm-6 addCustomerForm">
+
+                <h1 class="mb-4">Ny Kund</h1>
+                <div class="form-group">
+                    <label for="firstNameInput">Förnamn</label>
+                    <input type="text" class="form-control" id="firstNameInput" maxlength="25" placeholder="Förnamn">
+                </div>
+                <div class="form-group">
+                    <label for="lastNameInput">Efternamn</label>
+                    <input type="text" class="form-control" id="lastNameInput" maxlength="25" placeholder="Efternamn">
+                </div>
+                <div class="form-group">
+                    <label for="emailInput">Email</label>
+                    <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" maxlength="35" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="genderSelect">Kön</label>
+                    <select class="form-control" id="genderSelect">
+                        <option>Man</option>
+                        <option>Kvinna</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ageInput">Ålder</label>
+                    <input type="number" class="form-control" id="ageInput" placeholder="Ålder">
+                </div>
+                <button class="btn btn-success btn-block addCustomer">Lägg till</button>
+            </div>
+            <div class="col-sm-6">
+                <h1 class="mb-4">Seed Funktion</h1>
+                <p class="lead">Radera all data från databasen och importera kundlista från textfil.</p>
+                <button class="btn btn-info seedFunction">Seed</button>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="bd-footer text-muted pageFooter text-center">
+        &copy; 2017
+    </footer>
+
+</body>
+</html>
