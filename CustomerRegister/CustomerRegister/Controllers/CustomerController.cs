@@ -22,11 +22,7 @@ namespace CustomerRegister.Controllers
 
         public CustomerController(DatabaseContext context, IHostingEnvironment env, ILogger<CustomerController> logger)
         {
-            pathToCsvFile = env.ContentRootPath
-                + Path.DirectorySeparatorChar.ToString()
-                + "Assets"
-                + Path.DirectorySeparatorChar.ToString()
-                + "Customers.csv";
+            pathToCsvFile = Path.Combine(env.ContentRootPath, "Assets", "Customers.csv");
 
             this.logger = logger;
             this.context = context;

@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
 
     var msg = $('#msg');
+    var formHeader = $('#formHeader');
 
     var addCustomer = $('.addCustomer');
     var addCustomerForm = $('.addCustomerForm');
@@ -82,6 +83,7 @@
         addCustomer.css('display', 'none');
         addCustomerForm.append($(`<button id=${id} class="btn btn-primary btn-block saveEdit">Spara</button>`));
         addCustomerForm.append($(`<button class="btn btn-danger btn-block cancelEdit">Avbryt</button>`));
+        formHeader.html('Redigera Kund');
 
     });
 
@@ -121,6 +123,7 @@
         $(document).find('.saveEdit').remove();
         $(document).find('.cancelEdit').remove();
         addCustomer.css('display', 'block');
+        formHeader.html('Ny Kund');
 
     }
 
