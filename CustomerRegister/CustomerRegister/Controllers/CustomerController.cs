@@ -2,10 +2,12 @@
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using CustomerRegister.Entities;
 using CustomerRegister.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 
 namespace CustomerRegister.Controllers
@@ -14,10 +16,11 @@ namespace CustomerRegister.Controllers
     public class CustomerController : Controller
     {
 
-        private DatabaseContext context;
+        private readonly ILogger<CustomerController> logger;
         private readonly string pathToCsvFile;
+        private DatabaseContext context;
 
-        public CustomerController(DatabaseContext context, IHostingEnvironment env)
+        public CustomerController(DatabaseContext context, IHostingEnvironment env, ILogger<CustomerController> logger)
         {
             pathToCsvFile = env.ContentRootPath
                 + Path.DirectorySeparatorChar.ToString()
@@ -25,13 +28,15 @@ namespace CustomerRegister.Controllers
                 + Path.DirectorySeparatorChar.ToString()
                 + "Customers.csv";
 
+            this.logger = logger;
             this.context = context;
         }
 
         [HttpGet]
         public IActionResult GetCustomers()
         {
-            return Ok(context.Customers
+
+            var customers = context.Customers
                 .Select(o => new CustomerVM
                 {
                     Id = o.Id,
@@ -42,7 +47,11 @@ namespace CustomerRegister.Controllers
                     FirstName = o.FirstName,
                     Gender = o.Gender,
                     LastName = o.LastName,
-                }));
+                });
+
+            logger.LogInformation($"Getting all customers from database, count: {customers.Count()}");
+
+            return Ok(customers);
         }
 
         [HttpGet]
@@ -55,9 +64,20 @@ namespace CustomerRegister.Controllers
         [HttpPost]
         public IActionResult AddCustomer(Customer customer)
         {
+
+            if (!ModelState.IsValid)
+            {
+                logger.LogInformation("Adding customer failed because of invalid state model");
+                return BadRequest("Alla fält måste vara ifyllda.");
+            }
+
+
             customer.CustomerCreated = DateTime.Now;
             context.Customers.Add(customer);
             context.SaveChanges();
+
+            logger.LogInformation($"New customer added: {customer.FirstName} {customer.LastName}");
+
             return Ok();
         }
 
@@ -74,6 +94,9 @@ namespace CustomerRegister.Controllers
             //context.Entry(customer).State = EntityState.Modified;
             //context.Customers.Update(customer);
             context.SaveChanges();
+
+            logger.LogInformation($"Customer {customer.FirstName} {customer.LastName} edited");
+
             return Ok();
         }
 
@@ -82,6 +105,9 @@ namespace CustomerRegister.Controllers
         {
             context.Customers.Remove(context.Customers.Find(id));
             context.SaveChanges();
+
+            logger.LogInformation($"Customer with id {id} deleted");
+
             return Ok();
         }
 
@@ -107,6 +133,8 @@ namespace CustomerRegister.Controllers
                     });
                 }
             }
+
+            logger.LogInformation($"Seed function used");
 
             context.SaveChanges();
             return Ok();

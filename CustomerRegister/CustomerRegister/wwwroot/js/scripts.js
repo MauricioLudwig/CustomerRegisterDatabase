@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
 
+    var msg = $('#msg');
+
     var addCustomer = $('.addCustomer');
     var addCustomerForm = $('.addCustomerForm');
     var seedFunction = $('.seedFunction');
@@ -11,9 +13,6 @@
     var emailInput = $('#emailInput');
     var genderSelect = $('#genderSelect');
     var ageInput = $('#ageInput');
-
-    var successMsg = $('#successMsg');
-    var dangerMsg = $('#dangerMsg');
 
     getCustomers();
 
@@ -67,7 +66,9 @@
             getCustomers();
             resetValues();
         }).fail(function (xhr, status, error) {
-            console.log('fail at add customer');
+            msg
+                .html(xhr.responseText)
+                .slideDown().delay(2000).slideUp();
         });
 
     });
