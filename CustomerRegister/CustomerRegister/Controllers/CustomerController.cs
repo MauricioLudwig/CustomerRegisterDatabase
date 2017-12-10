@@ -22,8 +22,7 @@ namespace CustomerRegister.Controllers
 
         public CustomerController(DatabaseContext context, IHostingEnvironment env, ILogger<CustomerController> logger)
         {
-            pathToCsvFile = Path.Combine(env.ContentRootPath, "Assets", "Customers.csv");
-
+            pathToCsvFile = Path.Combine(env.WebRootPath, "assets", "Customers.csv");
             this.logger = logger;
             this.context = context;
         }
@@ -113,7 +112,7 @@ namespace CustomerRegister.Controllers
         {
             context.Customers.RemoveRange(context.Customers);
 
-            using (StreamReader sr = new StreamReader(pathToCsvFile))
+            using (var sr = System.IO.File.OpenText(pathToCsvFile))
             {
                 while (!sr.EndOfStream)
                 {

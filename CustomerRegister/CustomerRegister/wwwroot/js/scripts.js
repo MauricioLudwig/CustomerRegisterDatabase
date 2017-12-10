@@ -169,6 +169,7 @@
             console.log('success seed ajax');
             getCustomers();
         }).fail(function (xhr, status, error) {
+            console.log('Fail seed ajax');
         });
 
     });
