@@ -189,8 +189,11 @@
             url: '/api/customer/log/' + data,
             type: 'GET',
         }).done(function (result) {
-            console.log('success at get log file');
-            $('#logfileOutput').empty().html(result);
+            $('#logfileOutput').empty();
+            $.each(result, function (index, item) {
+                $('#logfileOutput').append('<p>' + item + '</p>');
+            });
+            //$('#logfileOutput').empty().html(result);
         }).fail(function (xhr, status, error) {
             $('#logfileOutput').empty().html('<p class="lead">' + xhr.responseText + '</p>');
             console.log('fail at get log file');

@@ -149,7 +149,7 @@ namespace CustomerRegister.Controllers
                 return BadRequest("No file exists");
             else
             {
-                return Ok(System.IO.File.ReadAllText(fileName));
+                return Ok(System.IO.File.ReadAllLines(fileName));
             }
         }
 
