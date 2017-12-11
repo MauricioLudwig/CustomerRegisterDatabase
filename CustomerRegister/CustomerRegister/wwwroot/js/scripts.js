@@ -6,6 +6,7 @@
     var addCustomer = $('.addCustomer');
     var addCustomerForm = $('.addCustomerForm');
     var seedFunction = $('.seedFunction');
+    var getLogFile = $('.getLogFile');
 
     var tableBody = $('#tableBody');
 
@@ -170,6 +171,29 @@
             getCustomers();
         }).fail(function (xhr, status, error) {
             console.log('Fail seed ajax');
+        });
+
+    });
+
+    getLogFile.on('click', function () {
+
+        console.log('Inside get log file');
+        var data = $('#shortdateInput').val()
+        console.log(data)
+
+        if (data.length === 0) {
+            data = 'test';
+        }
+
+        $.ajax({
+            url: '/api/customer/log/' + data,
+            type: 'GET',
+        }).done(function (result) {
+            console.log('success at get log file');
+            $('#logfileOutput').empty().html(result);
+        }).fail(function (xhr, status, error) {
+            $('#logfileOutput').empty().html('<p class="lead">' + xhr.responseText + '</p>');
+            console.log('fail at get log file');
         });
 
     });

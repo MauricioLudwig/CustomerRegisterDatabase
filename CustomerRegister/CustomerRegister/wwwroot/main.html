@@ -94,6 +94,20 @@
                 <h1 class="mb-4">Seed Funktion</h1>
                 <p class="lead">Radera all data från databasen och importera kundlista från textfil.</p>
                 <button class="btn btn-info seedFunction">Seed</button>
+                <hr />
+                <h1 class="mb-4">NLog</h1>
+                <p class="lead">Hämta logg genom att skriva in datum i fäletet nedan</p>
+                <div class="form-group">
+                    <label for="shortdateInput">Short date</label>
+                    <input type="text" class="form-control" id="shortdateInput" maxlength="35" placeholder="YYYY-MM-DD">
+                </div>
+                <button class="btn btn-info getLogFile">Fetch</button>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-sm-12">
+                <div id="logfileOutput"></div>
             </div>
         </div>
 

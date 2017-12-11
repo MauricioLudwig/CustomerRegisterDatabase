@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using NLog;
+using NLog.Targets;
 
 namespace CustomerRegister.Controllers
 {
@@ -133,6 +135,22 @@ namespace CustomerRegister.Controllers
 
             context.SaveChanges();
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("log/{shortdate}")]
+        public IActionResult GetNLogFile(DateTime shortdate)
+        {
+            var fileTarget = (FileTarget)LogManager.Configuration.FindTargetByName("ownFile-web");
+            var logEventInfo = new LogEventInfo { TimeStamp = shortdate };
+            string fileName = fileTarget.FileName.Render(logEventInfo);
+
+            if (!System.IO.File.Exists(fileName))
+                return BadRequest("No file exists");
+            else
+            {
+                return Ok(System.IO.File.ReadAllText(fileName));
+            }
         }
 
     }
