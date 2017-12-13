@@ -146,7 +146,7 @@ namespace CustomerRegister.Controllers
             string fileName = fileTarget.FileName.Render(logEventInfo);
 
             if (!System.IO.File.Exists(fileName))
-                return BadRequest("No file exists");
+                return NotFound("No file exists");
             else
             {
                 return Ok(System.IO.File.ReadAllLines(fileName));

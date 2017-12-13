@@ -161,13 +161,10 @@
 
     seedFunction.on('click', function () {
 
-        console.log('inside seed function');
-
         $.ajax({
             url: '/api/customer/seed',
             type: 'GET'
         }).done(function (result) {
-            console.log('success seed ajax');
             getCustomers();
         }).fail(function (xhr, status, error) {
             console.log('Fail seed ajax');
@@ -177,9 +174,7 @@
 
     getLogFile.on('click', function () {
 
-        console.log('Inside get log file');
-        var data = $('#shortdateInput').val()
-        console.log(data)
+        var data = $('#dateInput').val()
 
         if (data.length === 0) {
             data = 'test';
@@ -196,7 +191,6 @@
             //$('#logfileOutput').empty().html(result);
         }).fail(function (xhr, status, error) {
             $('#logfileOutput').empty().html('<p class="lead">' + xhr.responseText + '</p>');
-            console.log('fail at get log file');
         });
 
     });
