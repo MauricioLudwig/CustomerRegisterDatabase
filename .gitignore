@@ -260,3 +260,5 @@ paket-files/
 __pycache__/
 *.pyc
 *db-lock
+*appsettings.json
+/CustomerRegister/CustomerRegister/Properties/PublishProfiles/customer-register - Web Deploy.pubxml
